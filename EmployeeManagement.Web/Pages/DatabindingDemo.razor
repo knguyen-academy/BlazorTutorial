@@ -1,0 +1,61 @@
+﻿@page "/databindingdemo"
+@inherits DatabindingDemoBase
+
+<h3>DatabindingDemo</h3>
+<hr />
+
+<h3>One way Data bidning</h3>
+<div>
+    <b>Name: </b> @Name
+</div>
+
+<div>
+    <b>Name with salutation:</b> @(Gender == "Male" ? $"Mr. {Name}" : $"Miss. {Name}")
+</div>
+
+<div>
+    <b>Name: </b> <input value="@Name" />
+</div>
+
+<hr />
+<h3>Two way Data bidning</h3>
+@**********************@
+@*BIND VALUE ATTRIBUTE*@
+@**********************@
+@*First, data flows from component class to View, then flow from UI to component class by onchange event  *@
+<div>
+    <b>Name: </b> <input value="@Name" @onchange="@(e=> { Name = e.Value.ToString(); })" />
+</div>
+
+@*Same way as above example, using bind*@
+<div>
+    <b>Name: </b> <input @bind="Name" />
+</div>
+
+@*event is raised as soon as the value is change, no need onchange to see the change*@
+<div>
+    <b>Name: </b> <input @bind="Name" @bind:event="oninput" />
+</div>
+<hr />
+<div>
+    <b>Description</b>
+    <div>
+        <textarea @bind="Description" @bind:event="oninput" style="width:500px" />
+    </div>
+    <div>
+        <b>Count: </b> @Description.Length
+    </div>
+</div>
+<hr />
+@************************@
+@*BIND Element ATTRIBUTE*@
+@************************@
+@*Syntax: bind-{attributeName} bind-{attribute}:event*@
+
+<div>
+    <b>Color: </b> <input @bind="Color" />
+
+    <div @bind-style="@Color" @bind-style:event="onchange">
+        <h3>The background color of this text changes</h3>
+    </div>
+</div>
